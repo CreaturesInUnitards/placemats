@@ -38,7 +38,9 @@ export function classifyLinkType(rel: string | undefined): string {
 function parseScenarioIdFromRelation(relationUrl?: string): number | undefined {
   if (!relationUrl) return undefined;
 
-  const match = relationUrl.match(/(?:\/workItems\/|workitems\/|id=)(\d+)/i);
+  const match = relationUrl.match(/(?:\/workItems\/|\/workitems\/|\/WorkItem\/|WorkItem\/|id=|workitem\/)(\d+)/i)
+    ?? relationUrl.match(/(\d+)(?!.*\d)/);
+
   return match ? Number(match[1]) : undefined;
 }
 

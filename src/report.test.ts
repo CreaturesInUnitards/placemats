@@ -89,3 +89,38 @@ test("buildScenarioReportMarkdown renders table rows from collected links", () =
   assert.match(markdown, /\| 101 \| Epic One \| 201 \| related \|/);
   assert.match(markdown, /\| 102 \| Epic Two \| 202 \| child \|/);
 });
+
+test("parseScenarioIdFromRelation handles Azure DevOps vstfs URLs", () => {
+  const items: WorkItem[] = [
+    {
+      id: 101,
+      title: "Epic One",
+      workItemType: "Epic",
+      state: "Active",
+      assignedTo: "A",
+      areaLevel4: "",
+      iterationLevel2: "",
+      risk: "",
+      riskAssessment: "",
+      url: "https://example.test/_workitems/edit/101",
+      relations: [{ rel: "System.LinkTypes.Related", url: "vstfs:///WorkItemTracking/WorkItem/201" }],
+    },
+    {
+      id: 201,
+      title: "Scenario Alpha",
+      workItemType: "Scenario",
+      state: "Active",
+      assignedTo: "A",
+      areaLevel4: "",
+      iterationLevel2: "",
+      risk: "",
+      riskAssessment: "",
+      url: "https://example.test/_workitems/edit/201",
+      relations: [],
+    },
+  ];
+
+  assert.deepEqual(collectScenarioLinks(items), [
+    { epicId: 101, epicTitle: "Epic One", scenarioId: 201, linkType: "related" },
+  ]);
+});
