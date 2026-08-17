@@ -1,0 +1,28 @@
+{
+  "name": "ado-placemat",
+  "version": "1.0.0",
+  "description": "Generate a placemat PowerPoint from an Azure DevOps query URL, one slide per parent Epic with a table of child Epics.",
+  "type": "module",
+  "bin": {
+    "placemat": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsx src/index.ts",
+    "placemat": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/**/*.test.ts"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "pptxgenjs": "^3.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.3"
+  }
+}
